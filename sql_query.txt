@@ -1,0 +1,90 @@
+CREATE DATABASE exam_application;
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    candidate_id INT UNIQUE,
+    candidate_name VARCHAR(50) NOT NULL UNIQUE,
+    password_hash CHAR(60) NOT NULL,
+    exam_code INT NOT NULL,
+    subject_code INT NOT NULL,
+    exam_date DATE,
+    role SET('111', '222') DEFAULT '222',
+    refresh_token VARCHAR(512) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `questions` (
+  `question_id` INT AUTO_INCREMENT PRIMARY KEY,
+  `subject_name` VARCHAR(50) NOT NULL,
+  `subject_code` INT NOT NULL,
+  `question_text` TEXT NOT NULL,
+  `option_1` TEXT DEFAULT NULL,
+  `option_2` TEXT DEFAULT NULL,
+  `option_3` TEXT DEFAULT NULL,
+  `option_4` TEXT DEFAULT NULL,
+  `option_5` TEXT DEFAULT NULL,
+  `correct_option_id` INT NOT NULL,
+  `correct_option` TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE responses (
+    response_id INT AUTO_INCREMENT PRIMARY KEY,
+    candidate_id INT NOT NULL,
+    question_id INT NOT NULL,
+    selected_option_id INT,
+    selected_answer TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE results (
+    result_id INT AUTO_INCREMENT PRIMARY KEY,
+    candidate_id INT NOT NULL,
+    exam_date DATE,
+    exam_name VARCHAR(255) NOT NULL,
+    exam_code INT NOT NULL UNIQUE,
+    subject_name VARCHAR(50) NOT NULL,
+    subject_code INT NOT NULL,
+    total_marks INT NOT NULL,
+    obtained_marks INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE exam_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    exam_date DATE,
+    exam_name VARCHAR(255) NOT NULL,
+    exam_code INT NOT NULL UNIQUE,
+    subject_name VARCHAR(50) NOT NULL,
+    subject_code INT NOT NULL,
+    exam_duration_mins INT NOT NULL,
+    total_marks INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE candidate_details (
+    candidate_details_id INT AUTO_INCREMENT PRIMARY KEY,
+    candidate_id INT NOT NULL,
+    exam_code INT NOT NULL,
+    subject_code INT NOT NULL,
+    exam_date DATE,
+    exam_attended SET('Y', 'N') DEFAULT 'N',
+    exam_completed SET('auto_submitted', 'manual_submitted', 'not_submitted') DEFAULT 'not_submitted',
+    candidate_duration INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+// candidate's questions last updated time
+SELECT r1.*
+FROM responses r1
+JOIN (
+    SELECT candidate_id, MAX(created_at) AS max_created_at
+    FROM responses
+    GROUP BY candidate_id
+) r2 ON r1.candidate_id = r2.candidate_id AND r1.created_at = r2.max_created_at;

@@ -1,0 +1,22 @@
+/* body, html {
+    height: 100%;
+    margin: 0;
+} */
+  
+.loginComponent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* overflow: hidden; Prevent scrolling */
+  }
+  
+  .loginSection {
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+    background-color: #f8f9fa;
+    text-align: center;
+    /* height: 100vh; */
+  }

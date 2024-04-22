@@ -1,0 +1,42 @@
+/* styles.css */
+.bg-body-tertiary {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 5px 10px;
+    border: 3px solid black;
+    border-radius: 15px;
+    margin-top: 5px;
+
+  }
+  
+  .navbar {
+    background-color: #343a40; /* Dark navbar background */
+    color: white; /* Text color */
+  }
+  
+  .navbar-brand {
+    font-size: 24px; /* Adjust the font size of the brand */
+    font-weight: bold; /* Make the brand text bold */
+  }
+  
+  .navbar-text {
+    margin-left: 10px; /* Add some space between the navbar items */
+  }
+
+  .navbarExam {
+    /* border: 2px solid #2a302a; */
+    /* border-radius: 5px;  */
+    padding: 10px; /* Add some padding to separate content from the border */
+    margin-right: 10px;
+    font-size: 20px;
+    
+  }
+  
+  .navbarTime {
+    border: 2px solid #2a302a;
+    border-radius: 5px; 
+    padding: 10px; /* Add some padding to separate content from the border */
+  }
+  
+  /* .main-content {
+    padding: 20px;
+  } */
